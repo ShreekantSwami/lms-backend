@@ -6,7 +6,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(bodyParser.json());
 require("./MongoConnection/MongoConnection");
-const userSchema = require("../backend/Schema/UserSchema");
+const userSchema = require("./Schema/UserSchema");
 app.post("/api/checkUser", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
