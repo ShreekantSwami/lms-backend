@@ -7,6 +7,8 @@ app.use(cors());
 app.use(bodyParser.json());
 require("./MongoConnection/MongoConnection");
 const userSchema = require("./Schema/UserSchema");
+
+
 app.post("/api/checkUser", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -15,10 +17,13 @@ app.post("/api/checkUser", async (req, res) => {
   // Check if the user exists in the database
   const checkUser = await userSchema.findOne({ email: email });
   if (checkUser) {
-    return res.status(200).json({ message: "User Present" });
+    return res
+      .status(200)
+      .json({ message: "User Present", checkUser: checkUser });
   }
   return res.status(400).json({ message: "User Doesn't Exists" });
 });
+
 app.post("/api/saveUser", async (req, res) => {
   const data = req.body;
   console.log(data);
@@ -51,6 +56,10 @@ app.post("/api/saveUser", async (req, res) => {
     res.status(500).json({ message: "Error saving user" });
   }
 });
+
+
+
+
 app.listen(1402, (req, res) => {
   console.log("Srever is running on port 1402");
 });
